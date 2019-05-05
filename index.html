@@ -5,32 +5,38 @@
 	<title>Parsing Data</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<style>
+			body {
+				margin: 0;
+				padding: 0;
+			}
+			.card {
+				border: none;
+			}
+	</style>
 </head>
 <body>
 	<div class="container">
 		<div id="col" class="row"></div>
 	</div>
-	<ul>
-		<template id="templates">
+
+		<template class="templates">
 			<div class="col-3 py-5">
-				<li>
-					<div class="card <color>">
-					  	<div class="card-content p-4 shadow text-white pt-4">
-						    <p>by : <by> </p>
-						    <p>descendants : <descendants> </p>
-						    <p>id : <descendants> </id>
-						    <p>kids : <kids> </p>
-						    <p>score : <score> </p>
-						    <p>time : <time> </id>
-						    <p>title : <title> </p>
-						    <p>type : <type> </p>
-						    <p>url : <url> </id>
-						    <color>
-					    </div>
+				  <div class="card-content p-4 shadow text-white pt-4">
+						<p class="card-title"> by : <by> </p>
+						<p>descendants : <descendants> </p>
+						<p>id : <descendants> </id>
+						<p>kids : <kids> </p>
+						<p>score : <score> </p>
+						<p>time : <time> </id>
+						<p>title : <title> </p>
+						<p>type : <type> </p>
+						<p>url : <url> </p>
 					</div>
-				</li>
+				</div>	
 			</div>
-		</template>
+		</template> 
+
 	</ul>
 </body>
 
@@ -40,28 +46,35 @@
 		var template = document.getElementById("templates").innerHTML;
 		var target = document.getElementById("col");
 		let temp = "";
-		var data = fetch('https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty').then(async (result)=>{
-			var data = await result.json();
-			data.forEach(async ( item, key )=>{
-				if ( key %2 === 0){
-					var background  =  "bg-info";
+		let item = "";
 
-				}else {
-					var background  =  "bg-danger";
-				}
-				temp = temp + template
-				.replace('<by>', item["by"])
-				.replace('<descendants>', item["descendants"])
-				.replace('<id>', item["id"])
-				.replace('<kids>', item["kids"])
-				.replace('<score>', item["score"])
-				.replace('<time>', item["time"])
-				.replace('<title>', item["title"])
-				.replace('<type>', item["type"])
-				.replace('<url>', item["url"])
-				.replace('<color>', color)
+		var data = fetch("https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty").then(async (result)=>{
+			var data = await result.json();
+
+			data.forEach(async(item, index)=>{
+
+				item = "https://hacker-news.firebaseio.com/v0/item/" + data[index] +".json";
+				data.forEach(async ( item, key )=>{
+					
+					var.data = fetch(data).then(async(res) => {
+						var url = items.url;
+						temp = temp + template
+
+						
+
+						.replace('<by>', item["by"])
+						.replace('<descendants>', item["descendants"])
+						.replace('<id>', item["id"])
+						.replace('<kids>', item["kids"])
+						.replace('<score>', item["score"])
+						.replace('<time>', item["time"])
+						.replace('<title>', item["title"])
+						.replace('<type>', item["type"])
+						.replace('<url>', item["url"])
+					});
+				});
 			}); 
-			target.innerHTML = temp;
-		})
+				target.innerHTML = temp;
+		});
 	</script>
 </html>
