@@ -22,17 +22,19 @@
 
 		<template class="templates">
 			<div class="col-3 py-5">
-				  <div class="card-content p-4 shadow text-white pt-4">
-						<p class="card-title"> by : <by> </p>
-						<p>descendants : <descendants> </p>
-						<p>id : <descendants> </id>
-						<p>kids : <kids> </p>
-						<p>score : <score> </p>
-						<p>time : <time> </id>
-						<p>title : <title> </p>
-						<p>type : <type> </p>
-						<p>url : <url> </p>
-					</div>
+				<div class="card <color>">
+					<a href="<url>">
+						<div class="card-content p-4 shadow text-white pt-4">
+							<p class="card-title"> by : <by> </p>
+							<p>descendants : <descendants> </p>
+							<p>id : <descendants> </id>
+							<p>kids : <kids> </p>
+							<p>score : <score> </p>
+							<p>time : <time> </id>
+							<p>title : <title> </p>
+							<p>type : <type> </p>
+						</div>
+					</a>
 				</div>	
 			</div>
 		</template> 
@@ -48,19 +50,18 @@
 		let temp = "";
 		let item = "";
 
-		var data = fetch("https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty").then(async (result)=>{
+		var data = fetch("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty").then(async(result)=> {
 			var data = await result.json();
 
 			data.forEach(async(item, index)=>{
 
 				item = "https://hacker-news.firebaseio.com/v0/item/" + data[index] +".json";
-				data.forEach(async ( item, key )=>{
+				data.forEach(async(item, key)=> {
 					
-					var.data = fetch(data).then(async(res) => {
-						var url = items.url;
+					var.data = fetch(data).then(async(res)=> {
+						var url = item.url;
 						temp = temp + template
-
-						
+					});
 
 						.replace('<by>', item["by"])
 						.replace('<descendants>', item["descendants"])
@@ -70,11 +71,11 @@
 						.replace('<time>', item["time"])
 						.replace('<title>', item["title"])
 						.replace('<type>', item["type"])
-						.replace('<url>', item["url"])
+						.replace('<url>', item[`"<a href="<url>"></a>"`])
+						.replace('<color>',"bg-success")
 					});
-				});
-			}); 
-				target.innerHTML = temp;
+					target.innerHTML = temp;
+				}); 
 		});
 	</script>
 </html>
