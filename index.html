@@ -10,17 +10,28 @@
 				margin: 0;
 				padding: 0;
 			}
+
+			ul {
+				box-sizing: border-box;
+				overflow: hidden;
+			}
+
 			li {
 				vertical-align: middle;
 				align-items: center;
+				margin-top: 100px;	
+			}
+
+			li a {
+				margin-left: 20px;
 			}
 
 			li h5 {
-				margin-right: 0;
+				width: 3%;
 			}
 
 			li p {
-				font-size: 12px;
+				font-size: 10px;
 				float: right;
 				margin-left: auto;
 				text-align: right;
@@ -35,15 +46,16 @@
 	<ul>
 		<template id="templates">
 			<li class="list-group-item w-100 float-left d-flex">
-					<h5 class="float-left">score : {score} </h5>
-					<p>by : {by} </p>
-					<p>descendants : {descendants} </p>
-					<p>id 		: {id} </p>
-					<p>kids 	: {kids} </p>
-					<p>time 	: {time} </p>
-					<p>title 	: {title} </p>
-					<p>type 	: {type} </p>
+					<h5 class="float-left"> {score} </h5>
+					<p> {id} </p>
+					<p> {descendants} </p>
+					<p> {time} </p>
+					<a href=""><p> {title} </p></a>
+					<p> {type} </p>
+					<p> {by} </p>
+				
 			</li>
+			
 		</template> 
 	</ul>
 
@@ -70,22 +82,21 @@
 					var datap = fetch(itemp).then(async (res) => {
 						datap = await res.json();
 
-						console.log(datap);
+						//console.log(datap);
 
 						var title = itemp.title;
 						var url = itemp.url;
 						temp = temp + template
 						
 
-						.replace('{by}', datap["by"])
-						.replace('{descendants}', datap["descendants"])
-						.replace('{id}', datap["id"])
-						.replace('{kids}', datap["kids"])
 						.replace('{score}', datap["score"])
+						.replace('{id}', datap["id"])
+						.replace('{descendants}', datap["descendants"])
 						.replace('{time}', datap["time"])
 						.replace('{title}', datap["title"])
 						.replace('{type}', datap["type"])
 						.replace('{url}', datap["url"])
+						.replace('{by}', datap["by"])
 						roots.innerHTML = temp;
 					});
 			    });
