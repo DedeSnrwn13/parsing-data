@@ -36,7 +36,7 @@
 		<template id="templates">
 			<li class="list-group-item w-100 float-left d-flex">
 					<h5 class="float-left">score : {score} </h5>
-					<p> by : {by} </p>
+					<p>by : {by} </p>
 					<p>descendants : {descendants} </p>
 					<p>id 		: {id} </p>
 					<p>kids 	: {kids} </p>
@@ -63,26 +63,29 @@
 
 			data.forEach(async(item, index)=>{
 
-				itemp = "https://hacker-news.firebaseio.com/v0/item/8863/${output}" + data[index] +".json";
+				itemp = "https://hacker-news.firebaseio.com/v0/item/" + data[index] +".json";
 
-					//console.log(title);
+					
 					
 					var datap = fetch(itemp).then(async (res) => {
-						var datap = await res.json();
+						datap = await res.json();
+
+						console.log(datap);
+
 						var title = itemp.title;
 						var url = itemp.url;
 						temp = temp + template
 						
 
-						.replace('{by}', itemp.by)
-						.replace('{descendants}', itemp.descendants)
-						.replace('{id}', itemp.id)
-						.replace('{kids}', itemp.kids)
-						.replace('{score}', itemp.score)
-						.replace('{time}', itemp.time)
-						.replace('{title}')
-						.replace('{type}', itemp.type)
-						.replace('{url}', itemp.url)
+						.replace('{by}', datap["by"])
+						.replace('{descendants}', datap["descendants"])
+						.replace('{id}', datap["id"])
+						.replace('{kids}', datap["kids"])
+						.replace('{score}', datap["score"])
+						.replace('{time}', datap["time"])
+						.replace('{title}', datap["title"])
+						.replace('{type}', datap["type"])
+						.replace('{url}', datap["url"])
 						roots.innerHTML = temp;
 					});
 			    });
