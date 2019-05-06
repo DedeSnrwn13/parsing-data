@@ -10,9 +10,20 @@
 				margin: 0;
 				padding: 0;
 			}
-			.card {
-				border: none;
-				background: #2ac3f1;
+			li {
+				vertical-align: middle;
+				align-items: center;
+			}
+
+			li h5 {
+				margin-right: 0;
+			}
+
+			li p {
+				font-size: 12px;
+				float: right;
+				margin-left: auto;
+				text-align: right;
 			}
 	</style>
 </head>
@@ -20,25 +31,21 @@
 	<div class="container">
 		<div id="root" class="row"></div>
 	</div>
-
+	
+	<ul>
 		<template id="templates">
-			<div class="col-3 py-5">
-				<div class="card bg-success">
-					<a href="{url}">
-						<div class="card-content p-4 shadow text-white pt-4 bg-success">
-							<p class="card-title"> by : {by} </p>
-							<p>descendants : {descendants} </p>
-							<p>id 		: {id} </p>
-							<p>kids 	: {kids} </p>
-							<p>score 	: {score} </p>
-							<p>time 	: {time} </p>
-							<p>title 	: {title} </p>
-							<p>type 	: {type} </p>
-						</div>
-					</a>
-				</div>	
-			</div>
+			<li class="list-group-item w-100 float-left d-flex">
+					<h5 class="float-left">score : {score} </h5>
+					<p> by : {by} </p>
+					<p>descendants : {descendants} </p>
+					<p>id 		: {id} </p>
+					<p>kids 	: {kids} </p>
+					<p>time 	: {time} </p>
+					<p>title 	: {title} </p>
+					<p>type 	: {type} </p>
+			</li>
 		</template> 
+	</ul>
 
 	</ul>
 </body>
@@ -47,36 +54,39 @@
 
 	<script>
 		var template = document.getElementById("templates").innerHTML;
-		var target   = document.getElementById("root");
+		var roots   = document.getElementById("root");
 		let temp = "";
-		let item = "";
+		let itemp = "";
 
-		var data = fetch("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty").then(async (result)=>{
+		var data = fetch("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty").then(async (result) => {
 			var data = await result.json();
 
 			data.forEach(async(item, index)=>{
 
-				
+				itemp = "https://hacker-news.firebaseio.com/v0/item/8863/${output}" + data[index] +".json";
 
-				item = "https://hacker-news.firebaseio.com/v0/" + data[index] +".json";
+					//console.log(title);
 					
-					var output = fetch("https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty").then(async (res)=>{
-						var url = item.url;
+					var datap = fetch(itemp).then(async (res) => {
+						var datap = await res.json();
+						var title = itemp.title;
+						var url = itemp.url;
 						temp = temp + template
-					
+						
 
-						.replace('{by}', item["by"])
-						.replace('{descendants}', item["descendants"])
-						.replace('{id}', item["id"])
-						.replace('{kids}', item["kids"])
-						.replace('{score}', item["score"])
-						.replace('{time}', item["time"])
+						.replace('{by}', itemp.by)
+						.replace('{descendants}', itemp.descendants)
+						.replace('{id}', itemp.id)
+						.replace('{kids}', itemp.kids)
+						.replace('{score}', itemp.score)
+						.replace('{time}', itemp.time)
 						.replace('{title}')
-						.replace('{type}', item["type"])
-						.replace('{<a href="{url}"></a>}')
+						.replace('{type}', itemp.type)
+						.replace('{url}', itemp.url)
+						roots.innerHTML = temp;
 					});
 			    });
-				target.innerHTML = temp;
+				
 		}); 
 	</script>
 </html>
